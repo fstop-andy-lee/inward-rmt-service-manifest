@@ -160,7 +160,7 @@ spec:
       serviceAccountName: app-user
       containers:
         - name: inward-rmt-service
-          image: andylee1973/inward-rmt-service:latest
+          image: andylee1973/inward-rmt-service:1.0.0
           imagePullPolicy: Always #IfNotPresent
           startupProbe:
             httpGet:
