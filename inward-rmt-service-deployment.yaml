@@ -118,26 +118,8 @@ data:
           port: 6831
         const-sampler:
           decision: true
-    aml-url: http://aml.online.ocp4.com/aml/v1/screen
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: inward-rmt-service
-  labels:
-    app: inward-rmt-service
-spec:
-  rules:
-    - host: fx.online.ocp4.com
-      http:
-        paths: 
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: inward-rmt-service
-                port: 
-                  number: 8070              
+    aml-url: http://aml.apps.online.ocp4.com/aml/v1/screen
+
 ---
 apiVersion: v1
 kind: Service
@@ -146,19 +128,12 @@ metadata:
 spec:
   selector:
     app: inward-rmt-service
-    
-  #type: NodePort
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 8070
-      #nodePort: 32070
       targetPort: 8070
-      
-  #type: LoadBalancer
-  #ports:
-  #  - name: http
-  #    port: 8888
-  #    targetPort: 8080
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -242,4 +217,31 @@ spec:
               - key: application-develop.yml
                 path: application-develop.yml
             
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: inward-rmt-service-route
+  namespace: default
+  creationTimestamp: null
+  labels:
+    app: inward-rmt-service
+spec:
+  host: fx.apps.online.ocp4.com
+  to:
+    kind: Service
+    name: inward-rmt-service
+    weight: 100
+  port:
+    targetPort: 8070
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: fx.apps.online.ocp4.com
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+      wildcardPolicy: None
+      routerCanonicalHostname: router-default.apps.online.ocp4.com       
                  
