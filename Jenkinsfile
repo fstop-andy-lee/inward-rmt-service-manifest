@@ -1,6 +1,6 @@
 node {
         
-    def  IMAGE_NAME = 'andylee1973/aml-service'    
+    def  IMAGE_NAME = 'andylee1973/inward-rmt-service'    
     def  GIT_TOKEN_ID = 'fstop-andy-lee-github-token'
     def  GIT_USER_MAIL = 'andy_lee@fstop.com.tw'
     def  GIT_USER_NAME = 'fstop-andy-lee'
