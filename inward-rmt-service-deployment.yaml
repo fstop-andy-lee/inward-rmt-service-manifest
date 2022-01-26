@@ -143,7 +143,7 @@ spec:
   selector:
       matchLabels:
         app: inward-rmt-service
-  replicas: 0
+  replicas: 1
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
   strategy:
